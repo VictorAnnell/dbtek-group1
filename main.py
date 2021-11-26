@@ -1,22 +1,23 @@
-from config import host_name, user_name, user_password, db_name
 import mysql.connector
+from config import db_name, host_name, user_name, user_password
 from mysql.connector import Error
+
 from queries import *
+
 
 def create_connection(host_name, user_name, user_password, db_name):
     connection = None
     try:
-        connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            passwd=user_password,
-            database=db_name
-        )
+        connection = mysql.connector.connect(host=host_name,
+                                             user=user_name,
+                                             passwd=user_password,
+                                             database=db_name)
         print("Connection to MySQL DB successful")
     except Error as e:
         print(f"The error '{e}' occurred")
 
     return connection
+
 
 def execute_query(connection, query):
     cursor = connection.cursor()
@@ -26,6 +27,7 @@ def execute_query(connection, query):
         print("Query successful")
     except Error as err:
         print(f"Error: '{err}'")
+
 
 def read_query(connection, query):
     cursor = connection.cursor()
@@ -37,9 +39,11 @@ def read_query(connection, query):
     except Error as err:
         print(f"Error: '{err}'")
 
-connection = create_connection(host_name, user_name, user_password, db_name) # Connect to the Database
+
+connection = create_connection(host_name, user_name, user_password,
+                               db_name)  # Connect to the Database
 
 results = read_query(connection, q1)
 
 for result in results:
-  print(result)
+    print(result)
